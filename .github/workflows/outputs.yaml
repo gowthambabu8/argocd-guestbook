@@ -31,6 +31,8 @@ jobs:
   test:
     needs: build                          # Step 3: declare dependency
     runs-on: ubuntu-latest
+    outputs:
+      project_component: ${{ steps.meta.outputs.component }}
     steps:
       - name: Use the build outputs
         run: |
@@ -38,6 +40,7 @@ jobs:
           echo "Built at: ${{ needs.build.outputs.build_time }}"
           echo "From commit: ${{ needs.build.outputs.commit_sha }}"
           echo "Project Name: ${{ needs.build.outputs.project_name }}"
+          echo "component=${{ needs.build.outputs.project_name }}_FRONTEND"
 
   deploy:
     needs: [build, test]                  # Can depend on multiple jobs
@@ -46,3 +49,4 @@ jobs:
       - name: Deploy
         run: |
           echo "Deploying ${{ needs.build.outputs.image_tag }}"
+          echo "Project Component :: ${{ needs.test.outputs.project_component}}"
