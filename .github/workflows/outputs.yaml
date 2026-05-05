@@ -10,6 +10,7 @@ jobs:
       image_tag: ${{ steps.meta.outputs.tag }}
       build_time: ${{ steps.meta.outputs.timestamp }}
       commit_sha: ${{ steps.meta.outputs.sha }}
+      project_name: ${{ steps.meta.outputs.PROJECT }}
     steps:
       - uses: actions/checkout@v4
 
@@ -20,6 +21,7 @@ jobs:
           echo "tag=v1.0.${{ github.run_number }}" >> "$GITHUB_OUTPUT"
           echo "timestamp=$(date -u +%Y%m%dT%H%M%SZ)" >> "$GITHUB_OUTPUT"
           echo "sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+          echo "PROJECT=ROBOSHOP" >> "$GITHUB_OUTPUT""
 
       - name: Show what was generated
         run: |
@@ -35,6 +37,7 @@ jobs:
           echo "Testing image: ${{ needs.build.outputs.image_tag }}"
           echo "Built at: ${{ needs.build.outputs.build_time }}"
           echo "From commit: ${{ needs.build.outputs.commit_sha }}"
+          echo "Project Name: ${{ needs.build.outputs.project_name }}"
 
   deploy:
     needs: [build, test]                  # Can depend on multiple jobs
