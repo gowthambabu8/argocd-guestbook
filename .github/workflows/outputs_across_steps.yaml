@@ -3,12 +3,16 @@ on: ["push","workflow_dispatch"]
 jobs:
   version:
     runs-on: ubuntu-latest
+    env:
+      environment1: ${{ steps.ver.outputs.env1 }}
     steps:
       - name: print version
         id: ver
         run: |
           echo "v=1.2.3" >> "$GITHUB_OUTPUT"
+          echo "env1=DEV" >> "$GITHUB_ENV"
       - name: previous version
         id: ver2
         run: |
           echo "previous version is ${{ steps.ver.outputs.v }}"
+          echo "environment is $environment1"
