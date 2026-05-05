@@ -3,8 +3,6 @@ on: ["push","workflow_dispatch"]
 jobs:
   version:
     runs-on: ubuntu-latest
-    env:
-      environment1: ${{ env.project_env }}
     steps:
       - name: print version
         id: ver
@@ -15,4 +13,4 @@ jobs:
         id: ver2
         run: |
           echo "previous version is ${{ steps.ver.outputs.v }}"
-          echo "environment is $environment1"
+          echo "environment is $project_env"
