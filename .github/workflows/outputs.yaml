@@ -40,7 +40,7 @@ jobs:
           echo "Built at: ${{ needs.build.outputs.build_time }}"
           echo "From commit: ${{ needs.build.outputs.commit_sha }}"
           echo "Project Name: ${{ needs.build.outputs.project_name }}"
-          echo "component=${{ needs.build.outputs.project_name }}_FRONTEND"
+          echo "component=${{ needs.build.outputs.project_name }}_FRONTEND" >> "$GITHUB_OUTPUT"
 
   deploy:
     needs: [build, test]                  # Can depend on multiple jobs
