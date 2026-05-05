@@ -35,6 +35,7 @@ jobs:
       project_component: ${{ steps.meta.outputs.component }}
     steps:
       - name: Use the build outputs
+        id: meta
         run: |
           echo "Testing image: ${{ needs.build.outputs.image_tag }}"
           echo "Built at: ${{ needs.build.outputs.build_time }}"
