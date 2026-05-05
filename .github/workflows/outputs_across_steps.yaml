@@ -4,13 +4,13 @@ jobs:
   version:
     runs-on: ubuntu-latest
     env:
-      environment1: ${{ steps.ver.outputs.env1 }}
+      environment1: ${{ env.project_env }}
     steps:
       - name: print version
         id: ver
         run: |
           echo "v=1.2.3" >> "$GITHUB_OUTPUT"
-          echo "env1=DEV" >> "$GITHUB_ENV"
+          echo "project_env=DEV" >> "$GITHUB_ENV"
       - name: previous version
         id: ver2
         run: |
