@@ -21,4 +21,4 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: |
-          echo "Running ${{ matrix.os matrix.node}}"
+          echo "Running ${{ matrix.os }}"
