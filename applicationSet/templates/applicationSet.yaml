@@ -10,7 +10,7 @@ spec:
           {{ toYaml .Values.appValues | indent 10}}
   template:
     metadata:
-      name: 'roboshop-{{appName}}'
+      name: 'roboshop-{{`{{appName}}`}}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
@@ -18,10 +18,10 @@ spec:
       source:
         repoURL: https://github.com/gowthambabu8/argocd-guestbook.git
         targetRevision: main
-        path: '{{appName}}'
+        path: '{{`{{appName}}`}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{namespace}}'
+        namespace: '{{`{{namespace}}`}}'
       syncPolicy:
         automated:
           prune: true
