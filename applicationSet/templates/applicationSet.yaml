@@ -7,7 +7,7 @@ spec:
   generators:
     - list:
         elements:
-          {{ .Values.app-values }}
+          {{ .Values.appValues }}
   template:
     metadata:
       name: 'roboshop-{{app-name}}'
