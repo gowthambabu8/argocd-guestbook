@@ -6,7 +6,8 @@ metadata:
 spec:
   generators:
     - list:
-        elements:{{- toYaml .Values.appValues }}
+        elements: 
+          {{ toYaml .Values.appValues | nindent 10}}
   template:
     metadata:
       name: 'roboshop-{{`{{appName}}`}}'
