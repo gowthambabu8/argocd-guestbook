@@ -5,3 +5,5 @@ appValues:
     namespace: roboshop-prod
   - appName: guestbook-uat
     namespace: roboshop-uat
+  - appName: guestbook-release
+    namespace: roboshop-release
