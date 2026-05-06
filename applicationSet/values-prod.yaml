@@ -1,0 +1,9 @@
+appValues:
+  - appName: guestbook-1
+    namespace: roboshop-1
+  - appName: guestbook-prod-1
+    namespace: roboshop-prod-1
+  - appName: guestbook-uat-1
+    namespace: roboshop-uat-1
+  - appName: guestbook-release-1
+    namespace: roboshop-release-1
