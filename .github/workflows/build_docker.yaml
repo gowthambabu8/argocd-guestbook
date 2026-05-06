@@ -50,8 +50,8 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./debug
+          file: ./debug/Dockerfile
           push: true
           tags: |
             ${{ steps.tags.outputs.image_sha }}
