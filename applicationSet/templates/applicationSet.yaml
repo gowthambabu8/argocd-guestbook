@@ -6,8 +6,7 @@ metadata:
 spec:
   generators:
     - list:
-        elements:
-          {{ toYaml .Values.appValues | indent 10 }}
+        elements:{{- toYaml .Values.appValues }}
   template:
     metadata:
       name: 'roboshop-{{`{{appName}}`}}'
