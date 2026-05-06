@@ -1,0 +1,64 @@
+name: Build and Push to ECR
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'debug/**'
+  workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: roboshop/cart
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write       # for OIDC to AWS
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::007670671403:role/github-actions-deploy
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set image tags
+        id: tags
+        run: |
+          REGISTRY="${{ steps.ecr.outputs.registry }}"
+          REPO="${{ env.ECR_REPOSITORY }}"
+          SHA="${{ github.sha }}"
+          SHORT_SHA="${SHA::7}"
+          
+          echo "image_sha=${REGISTRY}/${REPO}:${SHORT_SHA}" >> $GITHUB_OUTPUT
+          echo "image_latest=${REGISTRY}/${REPO}:latest" >> $GITHUB_OUTPUT
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ steps.tags.outputs.image_sha }}
+            ${{ steps.tags.outputs.image_latest }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Show pushed image
+        run: |
+          echo "Pushed: ${{ steps.tags.outputs.image_sha }}"
+          echo "Pushed: ${{ steps.tags.outputs.image_latest }}"
