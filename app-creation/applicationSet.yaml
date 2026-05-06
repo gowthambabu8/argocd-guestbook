@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: roboshop
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - name: guestbook
+          - name: guestbook-prod
+  template:
+    metadata:
+      name: 'roboshop-{{name}}'
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/gowthambabu8/argocd-guestbook.git
+        targetRevision: main
+        path: '{{name}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: roboshop
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
