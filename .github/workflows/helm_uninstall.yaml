@@ -62,7 +62,7 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm uninstall ${{ env.RELEASE_NAME }} ${{ env.CHART_PATH }} \
+          helm uninstall ${{ env.RELEASE_NAME }} \
             --namespace ${{ env.NAMESPACE }} 
 
       - name: List ArgoCD Applications
