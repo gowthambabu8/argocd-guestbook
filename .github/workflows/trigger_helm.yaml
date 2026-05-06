@@ -1,0 +1,86 @@
+name: Deploy ArgoCD Applications via Helm
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'application-creation/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - prod
+
+env:
+  AWS_REGION: us-east-1
+  EKS_CLUSTER: cluster-1
+  CHART_PATH: ./applicationSet
+  RELEASE_NAME: roboshop-multi-apps
+  NAMESPACE: argocd
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::007670671403:role/github-actions-deploy
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig \
+            --name ${{ env.EKS_CLUSTER }} \
+            --region ${{ env.AWS_REGION }}
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: 'v3.14.0'
+
+      - name: Lint Helm chart
+        run: helm lint ${{ env.CHART_PATH }} --values ${{ env.CHART_PATH }}/values-${{ inputs.environment || 'dev' }}.yaml
+
+      - name: Render templates (dry-run)
+        run: |
+          helm template ${{ env.RELEASE_NAME }} ${{ env.CHART_PATH }} \
+            --namespace ${{ env.NAMESPACE }} \
+            --values ${{ env.CHART_PATH }}/values-${{ inputs.environment || 'dev' }}.yaml
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install ${{ env.RELEASE_NAME }} ${{ env.CHART_PATH }} \
+            --namespace ${{ env.NAMESPACE }} \
+            --values ${{ env.CHART_PATH }}/values-${{ inputs.environment || 'dev' }}.yaml \
+            --atomic \
+            --wait \
+            --timeout 5m
+
+      - name: List ArgoCD Applications
+        run: |
+          kubectl get applications -n ${{ env.NAMESPACE }}
+
+      - name: Wait for Applications to sync
+        run: |
+          # Wait for all Applications managed by this release to become Synced
+          for app in $(kubectl get applications -n ${{ env.NAMESPACE }} \
+            -l app.kubernetes.io/instance=${{ env.RELEASE_NAME }} \
+            -o jsonpath='{.items[*].metadata.name}'); do
+            echo "Waiting for $app to sync..."
+            kubectl wait --for=jsonpath='{.status.sync.status}'=Synced \
+              application/$app -n ${{ env.NAMESPACE }} --timeout=5m
+          done
