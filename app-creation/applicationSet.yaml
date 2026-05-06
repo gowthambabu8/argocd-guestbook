@@ -7,11 +7,13 @@ spec:
   generators:
     - list:
         elements:
-          - name: guestbook
-          - name: guestbook-prod
+          - app-name: guestbook
+            namespace: roboshop
+          - app-name: guestbook-prod
+            namespace: roboshop-prod
   template:
     metadata:
-      name: 'roboshop-{{name}}'
+      name: 'roboshop-{{app-name}}'
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
@@ -19,10 +21,10 @@ spec:
       source:
         repoURL: https://github.com/gowthambabu8/argocd-guestbook.git
         targetRevision: main
-        path: '{{name}}'
+        path: '{{app-name}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: roboshop
+        namespace: '{{namespace}}'
       syncPolicy:
         automated:
           prune: true
