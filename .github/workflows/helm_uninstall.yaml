@@ -58,8 +58,7 @@ jobs:
       - name: Render templates (dry-run)
         run: |
           helm template ${{ env.RELEASE_NAME }} ${{ env.CHART_PATH }} \
-            --namespace ${{ env.NAMESPACE }} \
-            --values ${{ env.CHART_PATH }}/values-${{ inputs.environment || 'dev' }}.yaml
+            --namespace ${{ env.NAMESPACE }}
 
       - name: Deploy with Helm
         run: |
