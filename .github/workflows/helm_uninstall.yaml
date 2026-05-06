@@ -63,10 +63,7 @@ jobs:
       - name: Deploy with Helm
         run: |
           helm uninstall ${{ env.RELEASE_NAME }} ${{ env.CHART_PATH }} \
-            --namespace ${{ env.NAMESPACE }} \
-            --atomic \
-            --wait \
-            --timeout 5m
+            --namespace ${{ env.NAMESPACE }} 
 
       - name: List ArgoCD Applications
         run: |
