@@ -7,10 +7,7 @@ spec:
   generators:
     - list:
         elements:
-          - app-name: guestbook
-            namespace: roboshop
-          - app-name: guestbook-prod
-            namespace: roboshop-prod
+          {{ .Values.app-values }}
   template:
     metadata:
       name: 'roboshop-{{app-name}}'

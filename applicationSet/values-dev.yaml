@@ -1,0 +1,5 @@
+app-values:
+  - app-name: guestbook
+    namespace: roboshop
+  - app-name: guestbook-prod
+    namespace: roboshop-prod
