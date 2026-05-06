@@ -3,3 +3,5 @@ appValues:
     namespace: roboshop
   - appName: guestbook-prod
     namespace: roboshop-prod
+  - appName: guestbook-uat
+    namespace: roboshop-uat
