@@ -5,7 +5,7 @@ jobs:
   say-hello-from-bash:
     runs-on: ubuntu-latest
     steps:
-      - run: "Hello world from bash"
+      - run: echo "Hello world from bash"
   
   say-hello-from-python:
     runs-on:  ubuntu-24.04
