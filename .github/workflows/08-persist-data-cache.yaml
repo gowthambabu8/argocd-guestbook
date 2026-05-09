@@ -26,7 +26,7 @@ jobs:
           cd demo-folder
           date > timestamp.txt
 
-          cat demo-folder/timestamp.txt
+          cat timestamp.txt
       
       - name: upload content if cache-hit miss
         if: steps.demo-cache.outputs.cache-hit != 'true'
