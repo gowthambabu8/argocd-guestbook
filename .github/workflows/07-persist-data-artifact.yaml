@@ -1,0 +1,29 @@
+name: 07-persist-data-artifact
+on: 
+  workflow_dispatch:
+    
+jobs:
+  artifact_producer:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: create artifact data
+        uses: |
+          echo "This will be stored as artifact." > artifact.txt
+          echo "This will be downloaded for further analysis prupose." >> artifact.txt
+      
+      - name: Upload artifact data
+        uses: actions/upload-artifact@v4.6.2
+        with: 
+          name: example-artifact
+          path: artifact.txt
+  
+  artifact-consumer:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Download artifact 
+        uses: actions/download-artifact@v5.0.0
+        with:
+          name: example-artifact
+      
+      - name: cat example-artifact
+        run: cat example-artifact
