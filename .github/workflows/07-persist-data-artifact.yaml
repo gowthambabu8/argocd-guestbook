@@ -27,4 +27,4 @@ jobs:
           name: example-artifact
       
       - name: cat example-artifact
-        run: cat example-artifact
+        run: cat artifact.txt
