@@ -6,7 +6,7 @@ jobs:
   producer:
     runs-on: ubuntu-24.04
     outputs:
-      foo: ${{ steps.generator-foo.outputs.foo }}
+      foo: ${{ steps.generator-foo.outputs.foo_output }}
     steps:
       - name: Generate outputs and env level variables data
         id: generator-foo
@@ -20,8 +20,8 @@ jobs:
       
       - name: read variables data
         run: |
-          echo "outputs at job level :: ${{ steps.generator-foo.outputs.foo }}"
-          echo "env variables :: $foo_output"
+          echo "outputs at job level :: ${{ steps.generator-foo.outputs.foo_output }}"
+          echo "env variables :: $foo_env"
   
   consumer:
     runs-on: ubuntu-24.04
@@ -29,5 +29,5 @@ jobs:
     steps:
       - name: get data from previous job
         run: |
-          echo "foo_output from previous job :: ${{ needs.producer.outputs.foo_env }}"
+          echo "foo_output from previous job :: ${{ needs.producer.outputs.foo }}"
           echo "foo_env :: $foo_env"
