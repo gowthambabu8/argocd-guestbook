@@ -1,0 +1,37 @@
+name: 08-persist-data-cache
+on:
+  workflow_dispatch:
+    
+jobs:
+  actions-cache:
+    runs-on: ubuntu-24.04
+    # Attemp to restore cache
+    # If cache is not present the create cache file
+    # If cache is not present upload cache
+    # validate cache-hit and print cache data
+
+    steps:
+      - name: Resote cache
+        id: demo-cache
+        uses: actions/cache@v4.2.4
+        with:
+          path: demo-folder
+          key: demo-folder-v1
+      
+      - name: check cache-hit and prepare content
+        if: steps.demo-cache.output.cache-hit != 'true'
+        run:
+          echo "cache-hit miss generating content"
+          mkdir -p demo-folder
+          date > demo-folder/timestamp.txt
+      
+      - name: upload content if cache-hit miss
+        uses: actions/cache@v4.2.4
+        with:
+          path: demo-folder
+          key: demo-folder-v1
+      
+      - name: view cache hit and cache content
+        run: |
+          echo "cache-hit :: ${{steps.demo-cache.output.cache-hit}}"
+          cat demo-folder/timestamp.txt
