@@ -1,0 +1,21 @@
+name: "Hello World from different scenarios"
+on:
+  workflow_dispatch:
+jobs:
+  say-hello-from-bash:
+    runs-on: ubuntu-latest
+    steps:
+      - run: "Hello world from bash"
+  
+  say-hello-from-python:
+    runs-on:  ubuntu-24.04
+    steps:
+      - run: print("Hello Wordl from python")
+        shell: python
+  
+  say-hello-from-actions:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/hello-world-javascript-action@v1
+        with: 
+          who-to-greet: "from actions in github marketplace"
