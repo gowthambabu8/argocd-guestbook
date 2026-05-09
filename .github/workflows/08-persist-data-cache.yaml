@@ -23,9 +23,11 @@ jobs:
         run:
           echo "cache-hit miss generating content"
           mkdir -p demo-folder
-          date > demo-folder/timestamp.txt
+          cd demo-folder
+          date > timestamp.txt
       
       - name: upload content if cache-hit miss
+        if: steps.demo-cache.output.cache-hit != 'true'
         uses: actions/cache@v4.2.4
         with:
           path: demo-folder
