@@ -37,5 +37,5 @@ jobs:
       
       - name: view cache hit and cache content
         run: |
-          echo "cache-hit :: ${{steps.demo-cache.outputs.cache-hit}}"
+          echo "cache-hit :: ${{ steps.demo-cache.outputs.cache-hit }}"
           cat demo-folder/timestamp.txt
