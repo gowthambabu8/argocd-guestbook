@@ -19,7 +19,7 @@ jobs:
           key: demo-folder-v1
       
       - name: check cache-hit and prepare content
-        if: steps.demo-cache.output.cache-hit != 'true'
+        if: steps.demo-cache.outputs.cache-hit != 'true'
         run: |
           echo "cache-hit miss generating content"
           mkdir -p demo-folder
@@ -29,7 +29,7 @@ jobs:
           cat demo-folder/timestamp.txt
       
       - name: upload content if cache-hit miss
-        if: steps.demo-cache.output.cache-hit != 'true'
+        if: steps.demo-cache.outputs.cache-hit != 'true'
         uses: actions/cache@v4.2.4
         with:
           path: demo-folder
@@ -37,5 +37,5 @@ jobs:
       
       - name: view cache hit and cache content
         run: |
-          echo "cache-hit :: ${{steps.demo-cache.output.cache-hit}}"
+          echo "cache-hit :: ${{steps.demo-cache.outputs.cache-hit}}"
           cat demo-folder/timestamp.txt
