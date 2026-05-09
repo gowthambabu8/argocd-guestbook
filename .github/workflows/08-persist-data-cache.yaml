@@ -20,7 +20,7 @@ jobs:
       
       - name: check cache-hit and prepare content
         if: steps.demo-cache.output.cache-hit != 'true'
-        run:
+        run: |
           echo "cache-hit miss generating content"
           mkdir -p demo-folder
           cd demo-folder
