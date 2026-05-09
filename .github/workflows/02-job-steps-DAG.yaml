@@ -1,0 +1,33 @@
+name: 02-Jobs-Steps
+on:
+  workflow_dispatch:
+
+jobs:
+  job-1:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "step 1 in job-1 executed"
+      - run: echo "step 2 in job-1 executed"
+      - run: echo "step 3 in job-1 executed"
+      - run: echo "step 4 in job-1 executed"
+
+  job-2:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "Independent step for Job-2"
+
+  job-3:
+    runs-on: ubuntu-24.04
+    needs:
+      - job-1
+      - job-2
+    steps:
+      - run: echo "Waited for job-1, job-2 to get completed. executing step-1 from job-3"
+      - run: echo "Waited for job-1, job-2 to get completed. executing step-2 from job-3"
+
+  job-4:
+    runs-on: ubuntu-24.04
+    needs:
+      - job-3
+    steps:
+      - run: echo "Waited for job-3 to get completed. Executing step-1 from job-4"
