@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: create artifact data
-        uses: |
+        run: |
           echo "This will be stored as artifact." > artifact.txt
           echo "This will be downloaded for further analysis prupose." >> artifact.txt
       
