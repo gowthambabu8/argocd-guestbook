@@ -19,6 +19,7 @@ jobs:
   
   artifact-consumer:
     runs-on: ubuntu-24.04
+    needs: artifact_producer
     steps:
       - name: Download artifact 
         uses: actions/download-artifact@v5.0.0
