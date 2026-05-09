@@ -21,7 +21,7 @@ jobs:
       - name: read variables data
         run: |
           echo "outputs at job level :: ${{ steps.generator-foo.outputs.foo }}"
-          echo "env variables" :: $foo_output"
+          echo "env variables :: $foo_output"
   
   consumer:
     runs-on: ubuntu-24.04
