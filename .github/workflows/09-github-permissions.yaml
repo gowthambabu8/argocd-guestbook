@@ -19,7 +19,7 @@ jobs:
       - name: Update label to existing PR
         env: 
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr edit 1 --add-label documentation
+        run: gh pr edit 1 --add-label "documentation"
 
       - name: check if update completed.
         if: failure()
@@ -41,7 +41,7 @@ jobs:
       - name: Update label to existing PR
         env: 
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr edit 1 --add-label documentation
+        run: gh pr edit 1 --add-label "documentation"
 
       - name: On failure
         if: failure()
