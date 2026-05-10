@@ -1,0 +1,52 @@
+name: 09-github-permissions
+on: 
+  workflow_dispatch:
+    
+jobs:
+  pull-request-read:
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: read
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v5.0.0
+      
+      - name: Get existing PR's
+        run: gh pr list --limit 5
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Update label to existing PR
+        env: 
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr edit 1 --add-lable documentation
+
+      - name: check if update completed.
+        if: failure()
+        run: echo "Write operation is blocked... token is read only"
+
+  pull-request-write:
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: write
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v5.0.0
+      
+      - name: Get existing PR's
+        run: gh pr list --limit 5
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Update label to existing PR
+        env: 
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr edit 1 --add-lable documentation
+
+      - name: On failure
+        if: failure()
+        run: echo "Write operation is blocked... token is read only"
+      
+      - name: On success
+        if: success()
+        run: echo "Write operation is completed.... token is read write"
