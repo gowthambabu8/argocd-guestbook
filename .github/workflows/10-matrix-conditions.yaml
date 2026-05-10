@@ -16,7 +16,7 @@ jobs:
         letter: [a,b,c]
         exclude:
           - number: 1
-          - letter: c
+            letter: c
     timeout-minutes: 1
 
     steps:
