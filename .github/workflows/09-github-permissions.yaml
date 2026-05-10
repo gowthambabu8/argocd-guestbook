@@ -61,7 +61,7 @@ jobs:
           echo "===All labels"
           gh label list
           echo "==List Open PR=="
-          OPEN_PR=$(gh pr list --state open --limit 1 --json number '.[0].number')
+          OPEN_PR=$(gh pr list --state open --limit 1 --json number --jq '.[0].number')
           echo "Open PR number is $OPEN_PR"
           gh pr edit $OPEN_PR --add-label "documentation""
       
