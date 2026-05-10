@@ -55,6 +55,6 @@ jobs:
         run: | 
           echo "Write operation is completed.... token is read write"
           echo "===PR #1 VIEW"
-          gh pr view 1 --json number,title,state,labels, url
+          gh pr view 1 --json number,title,state,labels,url
           echo "===All labels"
           gh label list
