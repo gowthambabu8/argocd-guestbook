@@ -51,6 +51,8 @@ jobs:
         run: echo "Write operation is blocked... token is read only"
       
       - name: On success
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: success()
         run: | 
           echo "Write operation is completed.... token is read write"
