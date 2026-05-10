@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
 
 concurrency: 
-  group: ${{github.workflow}} - ${{github.ref}}
+  group: ${{github.workflow}}-${{github.ref}}
   cancel-in-progress: true
-  
+
 jobs:
   matrix-job:
     runs-on: ubuntu-24.04
