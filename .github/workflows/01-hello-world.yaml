@@ -27,4 +27,4 @@ jobs:
         uses: arduino/setup-task@v2
       
       - name: Hello World from taskfile
-        run: task =t taskfiles/taskfile.yaml hello
+        run: task -t taskfiles/taskfile.yaml hello
