@@ -23,6 +23,9 @@ jobs:
   say-hello-from-taskfile:
     runs-on: ubuntu-24.04
     steps:
+      - name: code Checkout
+        uses: actions/checkout@v5.0.0
+        
       - name: Install Task
         uses: arduino/setup-task@v2
       
