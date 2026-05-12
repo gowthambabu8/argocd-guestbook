@@ -19,3 +19,12 @@ jobs:
       - uses: actions/hello-world-javascript-action@v1
         with: 
           who-to-greet: "from actions in github marketplace"
+  
+  say-hello-from-taskfile:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Install Task
+        uses: arduino/setup-task@v2
+      
+      - name: Hello World from taskfile
+        run: task hello
