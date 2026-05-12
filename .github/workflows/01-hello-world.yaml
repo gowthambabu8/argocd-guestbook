@@ -29,8 +29,5 @@ jobs:
       - name: Install Task
         uses: arduino/setup-task@v2
       
-      - name: Hello World from taskfile
-        run: task hello
-      
       - name: Hello World from taskfile1
         run: task -t taskfiles/Taskfile.yaml hello
