@@ -33,4 +33,4 @@ jobs:
         run: task hello
       
       - name: Hello World from taskfile1
-        run: task -d taskfiles hello
+        run: task -t taskfiles/Taskfile.yaml hello
