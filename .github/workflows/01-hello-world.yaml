@@ -25,9 +25,12 @@ jobs:
     steps:
       - name: code Checkout
         uses: actions/checkout@v5.0.0
-        
+
       - name: Install Task
         uses: arduino/setup-task@v2
       
       - name: Hello World from taskfile
         run: task hello
+      
+      - name: Hello World from taskfile1
+        run: task -d taskfiles hello
