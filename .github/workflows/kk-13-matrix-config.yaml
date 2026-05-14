@@ -7,7 +7,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: docker-info
-              run: docker-info
+              run: docker info
             - name: docker run
               run: docker run hello-world
     
@@ -15,6 +15,6 @@ jobs:
         runs-on: windows-latest
         steps:
             - name: docker-info
-              run: docker-info
+              run: docker info
             - name: docker run
               run: docker run hello-world
