@@ -34,7 +34,7 @@ jobs:
         run: grep -i dragon dragon.txt
   
   deploy_pattern:
-    needs: build_pattern
+    needs: test_pattern
     runs-on: ubuntu-latest
     steps:
       - name: download data rtifact
