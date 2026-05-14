@@ -1,18 +1,49 @@
-name: Generate ASCII 
+name: 11-Generate ASCII 
 on: 
   workflow_dispatch:
     
 jobs:
-  ascii_pattern:
+  build_pattern:
     runs-on: ubuntu-latest
     steps:
       - name: code Checkout
         uses: actions/checkout@v4
-      
-      - name: list files
-        run: ls -ltra
         
       - name: Install cowsay
         run: | 
-          chmod +x ./ascii-shell.sh
-          ./ascii-shell.sh
+          sudo apt-get install -y cowsay
+          cowsay -f dragon "Run for cover, I am DRAGON..." >> dragon.txt
+      
+      - name: Upload data artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dragon-text-file
+          path: dragon.txt # file path in the runner
+
+
+  test_pattern:
+    needs: build_pattern
+    runs-on: ubuntu-latest
+    steps:
+      - name: download data rtifact
+        uses: actions/download-artifact@v4
+        with: 
+          name: dragon-text-file
+      
+      - name: check if exists
+        run: grep -i dragon dragon.txt
+  
+  deploy_pattern:
+    needs: build_pattern
+    runs-on: ubuntu-latest
+    steps:
+      - name: download data rtifact
+        uses: actions/download-artifact@v4
+        with: 
+          name: dragon-text-file
+      
+      - name: readon dragon file contents
+        run: cat dragon.txt
+  
+
+
