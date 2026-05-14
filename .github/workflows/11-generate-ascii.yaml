@@ -14,5 +14,5 @@ jobs:
         
       - name: Install cowsay
         run: | 
-          chmod +x ./ascii-shell.sh
-          ./ascii-shell.sh
+          chmod +x ascii-shell.sh
+          ascii-shell.sh
