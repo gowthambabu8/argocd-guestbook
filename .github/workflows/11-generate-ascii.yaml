@@ -10,16 +10,4 @@ jobs:
         uses: actions/checkout@v5.0.0
       
       - name: Install cowsay
-        run: sudo apt-get install -y cowsay
-      
-      - name: create ascii pattern
-        run: cowsay -f dragon "Run for cover, I am DRAGON..." >> dragon.txt
-
-      - name: verify file exists
-        run: grep -i dragon dragon.txt
-      
-      - name: print pattern
-        run: cat dragon.txt
-      
-      - name: list files
-        run: ls -ltra
+        run: ./ascii-shell/.sh
