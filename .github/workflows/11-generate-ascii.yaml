@@ -7,10 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: code Checkout
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v4
       
       - name: list files
         run: ls -ltra
         
       - name: Install cowsay
-        run: ./ascii-shell.sh
+        run: | 
+          chmod +x ./ascii-shell.sh
+          ./ascii-shell.sh
