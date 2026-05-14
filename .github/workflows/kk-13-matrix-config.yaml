@@ -1,0 +1,20 @@
+name: kk-13-matrix-config
+on:
+    workflow_dispatch: 
+
+jobs:
+    run-on-ubuntu:
+        runs-on: ubuntu-latest
+        steps:
+            - name: docker-info
+              run: docker-info
+            - name: docker run
+              run: docker run hello-world
+    
+    run-on-windows:
+        runs-on: windows-latest
+        steps:
+            - name: docker-info
+              run: docker-info
+            - name: docker run
+              run: docker run hello-world
