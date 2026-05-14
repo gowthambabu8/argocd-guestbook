@@ -9,5 +9,8 @@ jobs:
       - name: code Checkout
         uses: actions/checkout@v5.0.0
       
+      - name: list files
+        run: ls -ltra
+        
       - name: Install cowsay
         run: ./ascii-shell.sh
