@@ -1,0 +1,20 @@
+name: workflow filters and activities
+on:
+    push:
+        branches:
+            - main
+            - '!feature/**'
+    pull_request:
+        types: 
+          - opened
+          - reopened
+        branches:
+          - main
+        paths-ignore: 
+          - README.md
+        
+jobs:
+    say-hello:
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo Running workflow on event type ${{ github.event_name}}
