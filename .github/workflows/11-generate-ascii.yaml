@@ -10,4 +10,4 @@ jobs:
         uses: actions/checkout@v5.0.0
       
       - name: Install cowsay
-        run: ./ascii-shell/.sh
+        run: ./ascii-shell.sh
